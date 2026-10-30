@@ -1,0 +1,23 @@
+{
+  "name": "axiom-executor",
+  "productName": "Axiom Executor",
+  "version": "2.0.0",
+  "description": "Axiom Executor - premium Lua script executor for Roblox",
+  "main": "src/main/main.js",
+  "author": "Axiom",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "npm run vendor && electron .",
+    "dev": "npm run vendor && electron . --dev",
+    "vendor": "node scripts/vendor-monaco.js",
+    "icon": "node scripts/make-icon.js",
+    "dist": "npm run vendor && npm run icon && electron-builder --win nsis",
+    "pack": "npm run vendor && npm run icon && electron-builder --win --dir"
+  },
+  "devDependencies": {
+    "electron": "^31.3.0",
+    "electron-builder": "^24.13.3",
+    "monaco-editor": "^0.50.0"
+  }
+}
