@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:;" />
+<title>Axiom Executor</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div id="glow" aria-hidden="true"></div>
+<div id="ring" aria-hidden="true"></div>
+
+<header id="titlebar">
+  <div class="brand">
+    <div class="logo">A</div>
+    <div class="brandtext">
+      <strong>AXIOM</strong>
+      <span>executor v2.0</span>
+    </div>
+  </div>
+
+  <div class="statuses">
+    <div class="pill" id="pill-roblox"><i></i><span>Roblox</span></div>
+    <div class="pill" id="pill-inject"><i></i><span>Detached</span></div>
+    <div class="pill" id="pill-license"><i></i><span>Locked</span></div>
+  </div>
+
+  <div class="actions">
+    <button class="btn ghost" id="btn-inject">Inject</button>
+    <button class="btn primary" id="btn-exec">Execute <kbd>F5</kbd></button>
+    <div class="wincontrols">
+      <button id="win-min" aria-label="Minimize">&#8211;</button>
+      <button id="win-max" aria-label="Maximize">&#9633;</button>
+      <button id="win-close" aria-label="Close">&#10005;</button>
+    </div>
+  </div>
+</header>
+
+<main id="shell">
+
+  <aside id="sidebar">
+    <nav class="sidenav">
+      <button class="navbtn active" data-panel="explorer">Explorer</button>
+      <button class="navbtn" data-panel="library">Library</button>
+      <button class="navbtn" data-panel="settings">Settings</button>
+    </nav>
+
+    <section class="panel active" id="panel-explorer">
+      <div class="panelhead">
+        <span>Scripts</span>
+        <div class="panelhead-actions">
+          <button class="icon" id="btn-openfolder" title="Open folder">&#128193;</button>
+          <button class="icon" id="btn-newfile" title="New tab">+</button>
+        </div>
+      </div>
+      <div id="tree" class="tree"><p class="empty">No folder opened.</p></div>
+    </section>
+
+    <section class="panel" id="panel-library">
+      <div class="panelhead"><span>Library</span></div>
+      <input id="lib-search" class="search" type="search" placeholder="Search scripts..." />
+      <div id="lib-list" class="liblist"></div>
+    </section>
+
+    <section class="panel" id="panel-settings">
+      <div class="panelhead"><span>Settings</span></div>
+      <div class="settings">
+        <label class="row"><span>Font size</span><input type="range" id="set-font" min="11" max="22" step="1" /></label>
+        <label class="row"><span>Word wrap</span><input type="checkbox" id="set-wrap" /></label>
+        <label class="row"><span>Minimap</span><input type="checkbox" id="set-minimap" /></label>
+        <label class="row"><span>Auto-attach</span><input type="checkbox" id="set-autoattach" /></label>
+        <label class="row"><span>Cursor glow</span><input type="checkbox" id="set-glow" /></label>
+        <label class="row"><span>Animations</span><input type="checkbox" id="set-anim" /></label>
+        <label class="row"><span>Accent</span><input type="color" id="set-accent" /></label>
+        <button class="btn ghost wide" id="btn-detach">Detach DLL</button>
+        <button class="btn ghost wide" id="btn-clearconsole">Clear console</button>
+        <p class="hint">Type <code>/help</code> in the console for commands.</p>
+      </div>
+    </section>
+  </aside>
+
+  <section id="workarea">
+    <div id="tabstrip"></div>
+    <div id="editor-host"></div>
+    <div id="console-wrap">
+      <div class="consolehead">
+        <span>Console</span>
+        <button class="icon" id="btn-console-toggle">&#9662;</button>
+      </div>
+      <div id="console" class="console"></div>
+      <form id="console-form" class="consoleform" autocomplete="off">
+        <span class="prompt">&gt;</span>
+        <input id="console-input" type="text" placeholder="/enablecode AXIOM-2026" spellcheck="false" />
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<div id="toasts"></div>
+
+<div id="modal" class="modal" hidden>
+  <div class="modalbox">
+    <header>
+      <h2>Custom script</h2>
+      <button class="icon" id="modal-close">&#10005;</button>
+    </header>
+    <textarea id="modal-code" spellcheck="false" placeholder="print('hello from Axiom')"></textarea>
+    <footer>
+      <span class="modalnote" id="modal-note">Runs instantly in the attached client.</span>
+      <div>
+        <button class="btn ghost" id="modal-paste">Paste</button>
+        <button class="btn primary" id="modal-inject">Inject</button>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<script src="vendor/vs/loader.js"></script>
+<script src="js/cursor.js"></script>
+<script src="js/toast.js"></script>
+<script src="js/console.js"></script>
+<script src="js/tabs.js"></script>
+<script src="js/editor.js"></script>
+<script src="js/library.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
