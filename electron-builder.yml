@@ -1,1 +1,31 @@
-
+appId: ai.axiom.executor
+productName: Axiom Executor
+copyright: Copyright (c) 2026 Axiom
+directories:
+  output: dist
+  buildResources: build
+files:
+  - "src/**/*"
+  - "bin/**/*"
+  - "package.json"
+  - "!**/*.map"
+asar: true
+compression: maximum
+win:
+  icon: build/icon.ico
+  target:
+    - target: nsis
+      arch: [x64]
+  artifactName: Axiom-Executor-Setup-${version}.${ext}
+  requestedExecutionLevel: asInvoker
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Axiom Executor
+  installerIcon: build/icon.ico
+  uninstallerIcon: build/icon.ico
+  runAfterFinish: true
+  deleteAppDataOnUninstall: false
