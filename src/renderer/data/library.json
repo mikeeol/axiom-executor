@@ -1,0 +1,62 @@
+[
+  {
+    "title": "Infinite Jump",
+    "slug": "infinite-jump",
+    "tags": ["movement", "player"],
+    "code": "-- Axiom library: infinite jump\nlocal UIS = game:GetService(\"UserInputService\")\nUIS.JumpRequest:Connect(function()\n    local char = game.Players.LocalPlayer.Character\n    if char and char:FindFirstChildOfClass(\"Humanoid\") then\n        char.Humanoid:ChangeState(\"Jumping\")\n    end\nend)\nprint(\"Infinite jump enabled\")"
+  },
+  {
+    "title": "Walk Speed",
+    "slug": "walk-speed",
+    "tags": ["movement", "player"],
+    "code": "-- Axiom library: set walk speed\nlocal SPEED = 60\nlocal char = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()\nchar:WaitForChild(\"Humanoid\").WalkSpeed = SPEED\nprint(\"WalkSpeed = \" .. SPEED)"
+  },
+  {
+    "title": "Jump Power",
+    "slug": "jump-power",
+    "tags": ["movement", "player"],
+    "code": "-- Axiom library: set jump power\nlocal POWER = 120\nlocal char = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()\nlocal hum = char:WaitForChild(\"Humanoid\")\nhum.UseJumpPower = true\nhum.JumpPower = POWER\nprint(\"JumpPower = \" .. POWER)"
+  },
+  {
+    "title": "Full Bright",
+    "slug": "full-bright",
+    "tags": ["visual", "lighting"],
+    "code": "-- Axiom library: full bright\nlocal L = game:GetService(\"Lighting\")\nL.Brightness = 3\nL.ClockTime = 14\nL.FogEnd = 100000\nfor _, v in ipairs(L:GetDescendants()) do\n    if v:IsA(\"PostEffect\") then v.Enabled = false end\nend\nprint(\"Full bright applied\")"
+  },
+  {
+    "title": "Teleport To Mouse",
+    "slug": "tp-mouse",
+    "tags": ["movement", "utility"],
+    "code": "-- Axiom library: teleport to mouse\nlocal UIS = game:GetService(\"UserInputService\")\nlocal plr = game.Players.LocalPlayer\nUIS.InputBegan:Connect(function(input, processed)\n    if processed then return end\n    if input.KeyCode == Enum.KeyCode.T then\n        local char = plr.Character\n        if not char then return end\n        local hit = plr:GetMouse().Hit\n        char:MoveTo(hit.Position + Vector3.new(0, 4, 0))\n    end\nend)\nprint(\"Press T to teleport to your mouse\")"
+  },
+  {
+    "title": "ESP Boxes",
+    "slug": "esp-boxes",
+    "tags": ["visual", "esp"],
+    "code": "-- Axiom library: simple 2D ESP\nlocal plr = game.Players.LocalPlayer\nlocal cam = workspace.CurrentCamera\nlocal boxes = {}\nlocal function draw(p)\n    local char = p.Character\n    if not char or not char:FindFirstChild(\"HumanoidRootPart\") then return end\n    local root = char.HumanoidRootPart\n    local pos, onScreen = cam:WorldToViewportPoint(root.Position)\n    if not onScreen then if boxes[p] then boxes[p].Visible = false end return end\n    local b = boxes[p]\n    if not b then\n        b = Instance.new(\"Frame\")\n        b.Parent = game:GetService(\"CoreGui\")\n        b.BackgroundTransparency = 1\n        b.BorderSizePixel = 0\n        local s = Instance.new(\"UIStroke\", b)\n        s.Color = Color3.fromRGB(168, 85, 247)\n        s.Thickness = 1.5\n        boxes[p] = b\n    end\n    b.Visible = true\n    b.Size = UDim2.fromOffset(50, 90)\n    b.Position = UDim2.fromOffset(pos.X - 25, pos.Y - 45)\nend\ntask.spawn(function()\n    while task.wait(0.05) do\n        for _, p in ipairs(game.Players:GetPlayers()) do\n            if p ~= plr then pcall(draw, p) end\n        end\n    end\nend)\nprint(\"ESP enabled\")"
+  },
+  {
+    "title": "Anti AFK",
+    "slug": "anti-afk",
+    "tags": ["utility"],
+    "code": "-- Axiom library: anti AFK\nlocal vu = game:GetService(\"VirtualUser\")\ngame:GetService(\"Players\").LocalPlayer.Idled:Connect(function()\n    vu:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)\n    task.wait(1)\n    vu:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)\nend)\nprint(\"Anti-AFK active\")"
+  },
+  {
+    "title": "FPS Counter",
+    "slug": "fps-counter",
+    "tags": ["utility", "debug"],
+    "code": "-- Axiom library: FPS counter\nlocal RunService = game:GetService(\"RunService\")\nlocal label = Instance.new(\"TextLabel\")\nlabel.Parent = game:GetService(\"CoreGui\")\nlabel.Size = UDim2.fromOffset(130, 26)\nlabel.Position = UDim2.fromOffset(10, 10)\nlabel.BackgroundColor3 = Color3.fromRGB(10, 8, 18)\nlabel.TextColor3 = Color3.fromRGB(168, 85, 247)\nlabel.Font = Enum.Font.Code\nlabel.TextSize = 14\nlocal frames = 0\nlocal acc = 0\nRunService.RenderStepped:Connect(function(dt)\n    frames += 1\n    acc += dt\n    if acc >= 1 then\n        label.Text = \"FPS: \" .. frames\n        frames = 0\n        acc = 0\n    end\nend)\nprint(\"FPS counter enabled\")"
+  },
+  {
+    "title": "Server Hop",
+    "slug": "server-hop",
+    "tags": ["utility", "network"],
+    "code": "-- Axiom library: rejoin current place\nlocal TS = game:GetService(\"TeleportService\")\nlocal plr = game.Players.LocalPlayer\nprint(\"Rejoining...\")\ntask.wait(1)\nTS:Teleport(game.PlaceId, plr)"
+  },
+  {
+    "title": "Reset Character",
+    "slug": "reset",
+    "tags": ["player"],
+    "code": "-- Axiom library: reset character\nlocal char = game.Players.LocalPlayer.Character\nif char then\n    char:BreakJoints()\n    print(\"Character reset\")\nend"
+  }
+]
